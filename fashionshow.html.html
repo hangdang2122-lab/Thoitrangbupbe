@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Phòng Thay Đồ Hoàng Gia - Công Chúa Xinh Đẹp</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Quicksand & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --pink-primary: #ff6b9d;
+      --pink-soft: #ffe4ee;
+      --purple-soft: #f3e8ff;
+      --gold-accent: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #fff0f5 0%, #f8e8ff 50%, #e0f2fe 100%);
+      color: #4a354f;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .font-royal {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Thanh cuộn tùy chỉnh mềm mại */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 228, 238, 0.5);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #f9a8d4;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f472b6;
+    }
+
+    /* Hiệu ứng nút bấm bồng bềnh dễ thương */
+    .btn-cute {
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 0 rgba(219, 39, 119, 0.2), 0 6px 12px rgba(244, 114, 182, 0.2);
+    }
+    .btn-cute:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(219, 39, 119, 0.25), 0 10px 18px rgba(244, 114, 182, 0.3);
+    }
+    .btn-cute:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(219, 39, 119, 0.2);
+    }
+
+    /* Thẻ chọn đồ */
+    .item-card {
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 2.5px solid #fce7f3;
+      background: rgba(255, 255, 255, 0.9);
+    }
+    .item-card:hover {
+      transform: translateY(-3px) scale(1.02);
+      border-color: #f9a8d4;
+      box-shadow: 0 8px 16px -4px rgba(244, 114, 182, 0.25);
+    }
+    .item-card.selected {
+      border-color: #ec4899;
+      background: linear-gradient(180deg, #fff5f8 0%, #ffe4f0 100%);
+      box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2), 0 8px 16px -4px rgba(236, 72, 153, 0.3);
+    }
+
+    /* Hiệu ứng chớp mắt tự nhiên cho nhân vật SVG */
+    @keyframes princessBlink {
+      0%, 92%, 100% {
+        transform: scaleY(1);
+      }
+      96% {
+        transform: scaleY(0.08);
+      }
+    }
+    .eye-blink-group {
+      transform-origin: center 192px;
+      animation: princessBlink 4.8s infinite ease-in-out;
+    }
+
+    /* Hiệu ứng thở nhẹ nhàng cho công chúa */
+    @keyframes gentleFloat {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+    .princess-breathe {
+      animation: gentleFloat 3.6s ease-in-out infinite;
+    }
+
+    /* Hiệu ứng vỗ cánh tiên nhẹ nhàng */
+    @keyframes wingFlutter {
+      0%, 100% {
+        transform: scaleX(1);
+      }
+      50% {
+        transform: scaleX(0.92);
+      }
+    }
+    .wings-animate {
+      transform-origin: 200px 290px;
+      animation: wingFlutter 2.4s ease-in-out infinite;
+    }
+
+    /* Hạt lấp lánh phép thuật bay lên */
+    @keyframes sparklePop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+      }
+      40% {
+        opacity: 1;
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.1) rotate(90deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx) * 1.6), calc(-50% + var(--dy) * 1.6 - 25px)) scale(0.3) rotate(180deg);
+      }
+    }
+    .magic-sparkle {
+      position: absolute;
+      pointer-events: none;
+      animation: sparklePop 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      z-index: 40;
+    }
+
+    /* Khung sân khấu có viền ren vàng hoàng gia */
+    .royal-stage {
+      box-shadow: 
+        0 12px 32px rgba(190, 24, 93, 0.15),
+        inset 0 0 0 4px rgba(255, 255, 255, 0.7),
+        inset 0 0 24px rgba(255, 228, 238, 0.8);
+    }
+
+    /* Modal mượt */
+    .modal-backdrop {
+      backdrop-filter: blur(6px);
+      background: rgba(74, 53, 79, 0.45);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- THANH TIÊU ĐỀ HOÀNG GIA -->
+  <header class="sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b border-pink-200 px-3 sm:px-6 py-2.5 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <!-- Logo & Tên game -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-400 via-rose-400 to-amber-300 flex items-center justify-center text-white shadow-md border-2 border-white">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-royal text-lg sm:text-xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-amber-600 bg-clip-text text-transparent leading-tight">
+            Phòng Thay Đồ Hoàng Gia
+          </h1>
+          <p class="text-[11px] sm:text-xs text-pink-500 font-semibold">✨ Công Chúa Xinh Đẹp ✨</p>
+        </div>
+      </div>
+
+      <!-- Nhóm nút điều khiển nhanh -->
+      <div class="flex items-center gap-1.5 sm:gap-2.5">
+        <!-- Nút Âm thanh -->
+        <button id="btn-sound" onclick="toggleSound()" title="Bật/Tắt âm thanh"
+          class="btn-cute px-3 py-2 rounded-2xl bg-pink-50 hover:bg-pink-100 text-pink-600 border border-pink-200 font-bold text-xs sm:text-sm flex items-center gap-1.5">
+          <span id="sound-icon">🔊</span>
+          <span class="hidden md:inline" id="sound-label">Âm thanh</span>
+        </button>
+
+        <!-- Nút Bộ sưu tập -->
+        <button onclick="openGalleryModal()" title="Xem bộ sưu tập đã lưu"
+          class="btn-cute px-3 py-2 rounded-2xl bg-purple-50 hover:bg-purple-100 text-purple-600 border border-purple-200 font-bold text-xs sm:text-sm flex items-center gap-1.5 relative">
+          <span>🖼️</span>
+          <span class="hidden sm:inline">Bộ Sưu Tập</span>
+          <span id="gallery-badge" class="bg-purple-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+        </button>
+
+        <!-- Nút Phối Ngẫu Nhiên -->
+        <button onclick="randomizeOutfit()"
+          class="btn-cute px-3 sm:px-4 py-2 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5">
+          <span>🪄</span>
+          <span>Phối Ngẫu Nhiên</span>
+        </button>
+
+        <!-- Nút Đặt Lại -->
+        <button onclick="resetOutfit()"
+          class="btn-cute px-3 py-2 rounded-2xl bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 font-bold text-xs sm:text-sm flex items-center gap-1.5">
+          <span>🔄</span>
+          <span class="hidden sm:inline">Đặt Lại</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- KHU VỰC CHƠI CHÍNH -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-start">
+    
+    <!-- CỘT TRÁI: SÂN KHẤU CÔNG CHÚA (5 cột trên desktop) -->
+    <section class="lg:col-span-5 flex flex-col items-center">
+      <div id="stage-container" class="royal-stage relative w-full max-w-[420px] aspect-[4/5] rounded-3xl overflow-hidden border-4 border-white transition-all duration-500">
+        
+        <!-- Lớp Sparkle hiệu ứng phép thuật -->
+        <div id="sparkle-layer" class="absolute inset-0 pointer-events-none overflow-hidden z-20"></div>
+
+        <!-- Nhãn tên bối cảnh góc trên trái -->
+        <div class="absolute top-3 left-3 z-10 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full border border-pink-200 shadow-sm flex items-center gap-1.5">
+          <span class="text-xs">🏰</span>
+          <span id="bg-title-badge" class="text-xs font-bold text-pink-700">Sảnh Cung Điện Vàng</span>
+        </div>
+
+        <!-- Điểm phong cách trực tiếp góc trên phải -->
+        <div class="absolute top-3 right-3 z-10 bg-gradient-to-r from-amber-400 to-pink-500 text-white px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+          <span class="text-xs">👑</span>
+          <span id="live-style-score" class="text-xs font-bold">Lộng Lẫy</span>
+        </div>
+
+        <!-- SVG NHÂN VẬT CÔNG CHÚA NHIỀU LỚP SẮC NÉT -->
+        <svg id="princess-svg" viewBox="0 0 400 500" class="w-full h-full block" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Gradients cho các bối cảnh -->
+            <linearGradient id="bg-palace" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fef3c7"/>
+              <stop offset="50%" stop-color="#fde68a"/>
+              <stop offset="100%" stop-color="#fbcfe8"/>
+            </linearGradient>
+            <linearGradient id="bg-garden" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#e0f2fe"/>
+              <stop offset="55%" stop-color="#dcfce7"/>
+              <stop offset="100%" stop-color="#fce7f3"/>
+            </linearGradient>
+            <linearGradient id="bg-ice" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#cffafe"/>
+              <stop offset="55%" stop-color="#bae6fd"/>
+              <stop offset="100%" stop-color="#e0e7ff"/>
+            </linearGradient>
+            <linearGradient id="bg-forest" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1e1b4b"/>
+              <stop offset="55%" stop-color="#4c1d95"/>
+              <stop offset="100%" stop-color="#831843"/>
+            </linearGradient>
+
+            <!-- Soft shadow cho nhân vật -->
+            <radialGradient id="floor-shadow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(131, 24, 67, 0.28)"/>
+              <stop offset="100%" stop-color="rgba(131, 24, 67, 0)"/>
+            </radialGradient>
+
+            <!-- Má hồng mềm -->
+            <radialGradient id="blush-grad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ff6b9d" stop-opacity="0.65"/>
+              <stop offset="100%" stop-color="#ff6b9d" stop-opacity="0"/>
+            </radialGradient>
+
+            <!-- Bóng mượt tóc -->
+            <linearGradient id="hair-shine" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+              <stop offset="50%" stop-color="#ffffff" stop-opacity="0.08"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0.15"/>
+            </linearGradient>
+          </defs>
+
+          <!-- LỚP 1: BỐI CẢNH (BACKGROUND) -->
+          <g id="layer-background"></g>
+
+          <!-- Bóng đổ dưới chân công chúa -->
+          <ellipse cx="200" cy="466" rx="105" ry="16" fill="url(#floor-shadow)" />
+
+          <!-- NHÓM NHÂN VẬT CHÍNH (Có hiệu ứng nhịp thở nhẹ) -->
+          <g class="princess-breathe">
+            
+            <!-- LỚP 2: CÁNH TIÊN / PHỤ KIỆN SAU LƯNG -->
+            <g id="layer-wings" class="wings-animate"></g>
+
+            <!-- LỚP 3: TÓC SAU (BACK HAIR) -->
+            <g id="layer-hair-back"></g>
+
+            <!-- LỚP 4: CƠ THỂ CƠ BẢN (CỔ, VAI, TAY, CHÂN, GIÀY) -->
+            <g id="layer-body">
+              <!-- Chân thon -->
+              <path d="M182 375 L180 456 Q180 463 186 463 Q192 463 192 456 L194 375 Z" fill="#ffe0bd" class="skin-fill"/>
+              <path d="M206 375 L208 456 Q208 463 214 463 Q220 463 220 456 L218 375 Z" fill="#ffe0bd" class="skin-fill"/>
+              <!-- Giày búp bê hoàng gia -->
+              <path d="M178 452 Q186 449 194 452 L194 461 Q186 466 178 461 Z" fill="#f43f5e" class="shoe-fill"/>
+              <circle cx="186" cy="454" r="2.2" fill="#fde047"/>
+              <path d="M206 452 Q214 449 222 452 L222 461 Q214 466 206 461 Z" fill="#f43f5e" class="shoe-fill"/>
+              <circle cx="214" cy="454" r="2.2" fill="#fde047"/>
+
+              <!-- Cánh tay trái & phải duyên dáng -->
+              <path d="M166 252 Q144 288 148 326 Q151 334 157 331 Q161 326 160 315 Q160 288 174 264 Z" fill="#ffe0bd" class="skin-fill" stroke="#d49a7a" stroke-width="0.8"/>
+              <path d="M234 252 Q256 288 252 326 Q249 334 243 331 Q239 326 240 315 Q240 288 226 264 Z" fill="#ffe0bd" class="skin-fill" stroke="#d49a7a" stroke-width="0.8"/>
+
+              <!-- Cổ & Thân trên -->
+              <path d="M189 224 L189 248 L211 248 L211 224 Z" fill="#ffe0bd" class="skin-fill"/>
+              <!-- Bóng đổ nhẹ dưới cằm lên cổ -->
+              <ellipse cx="200" cy="233" rx="11" ry="5" fill="rgba(160, 90, 70, 0.16)"/>
+              
+              <!-- Thân trên cơ bản (sẽ được váy che phủ) -->
+              <path d="M167 248 Q200 242 233 248 L227 308 Q200 315 173 308 Z" fill="#ffe0bd" class="skin-fill"/>
+              <!-- Nội y lụa trắng cơ bản khi chưa mặc váy (luôn kín đáo) -->
+              <path d="M170 256 Q200 264 230 256 L226 308 Q200 314 174 308 Z" fill="#fff1f2"/>
+            </g>
+
+            <!-- LỚP 5: VÒNG CỔ / TRANG SỨC CỔ -->
+            <g id="layer-necklace"></g>
+
+            <!-- LỚP 6: VÁY & TRANG PHỤC CHÍNH (DRESS) -->
+            <g id="layer-dress"></g>
+
+            <!-- LỚP 7: PHỤ KIỆN CẦM TAY (ĐŨA PHÉP, TÚI XÁCH) -->
+            <g id="layer-hand-item"></g>
+
+            <!-- LỚP 8: ĐẦU & KHUÔN MẶT CHIBI/ANIME -->
+            <g id="layer-head">
+              <!-- Tai trái & phải -->
+              <ellipse cx="144" cy="188" rx="7" ry="11" fill="#ffe0bd" class="skin-fill" stroke="#d49a7a" stroke-width="0.8"/>
+              <ellipse cx="256" cy="188" rx="7" ry="11" fill="#ffe0bd" class="skin-fill" stroke="#d49a7a" stroke-width="0.8"/>
+              <!-- Khuyên tai ngọc trai nhỏ -->
+              <circle cx="143" cy="197" r="3" fill="#fff" stroke="#f59e0b" stroke-width="1"/>
+              <circle cx="257" cy="197" r="3" fill="#fff" stroke="#f59e0b" stroke-width="1"/>
+
+              <!-- Khuôn mặt bầu bĩnh dễ thương -->
+              <path d="M146 168 
+                       C146 126, 254 126, 254 168 
+                       C254 206, 232 231, 200 231 
+                       C168 231, 146 206, 146 168 Z" 
+                    fill="#ffe0bd" class="skin-fill" stroke="#d49a7a" stroke-width="1"/>
+            </g>
+
+            <!-- LỚP 9: TRANG ĐIỂM MẶT (PHẤN MÁ, HỌA TIẾT LẤP LÁNH) -->
+            <g id="layer-makeup-blush"></g>
+
+            <!-- LỚP 10: MẮT, LÔNG MÀY & BIỂU CẢM -->
+            <g id="layer-eyes-mouth"></g>
+
+            <!-- LỚP 11: TÓC MÁI & TÓC TRƯỚC (FRONT HAIR) -->
+            <g id="layer-hair-front"></g>
+
+            <!-- LỚP 12: PHỤ KIỆN TÓC (VƯƠNG MIỆN, KẸP HOA) -->
+            <g id="layer-headwear"></g>
+
+          </g>
+        </svg>
+
+        <!-- Nút Chụp Ảnh nổi bật ở đáy sân khấu -->
+        <div class="absolute bottom-3 inset-x-3 z-20 flex justify-center">
+          <button onclick="openSnapshotModal()"
+            class="btn-cute px-5 py-2.5 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-bold text-sm sm:text-base shadow-lg border-2 border-white flex items-center gap-2">
+            <span>📸</span>
+            <span>Chụp Ảnh & Lưu Bộ Sưu Tập</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CỘT PHẢI: TỦ ĐỒ & BẢNG TRANG ĐIỂM (7 cột trên desktop) -->
+    <section class="lg:col-span-7 bg-white/85 backdrop-blur-md rounded-3xl border-2 border-pink-100 shadow-xl p-3.5 sm:p-5 flex flex-col">
+      
+      <!-- THANH CHỌN 6 DANH MỤC CHÍNH -->
+      <nav aria-label="Danh mục tùy chỉnh" class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 sm:gap-2 mb-4">
+        <button onclick="switchTab('face')" data-tab="face"
+          class="tab-btn active flex flex-col items-center justify-center py-2 px-1 rounded-2xl font-bold text-xs transition-all border-2">
+          <span class="text-lg sm:text-xl mb-0.5">😊</span>
+          <span>Khuôn Mặt</span>
+        </button>
+        <button onclick="switchTab('hair')" data-tab="hair"
+          class="tab-btn flex flex-col items-center justify-center py-2 px-1 rounded-2xl font-bold text-xs transition-all border-2">
+          <span class="text-lg sm:text-xl mb-0.5">💇‍♀️</span>
+          <span>Kiểu Tóc</span>
+        </button>
+        <button onclick="switchTab('makeup')" data-tab="makeup"
+          class="tab-btn flex flex-col items-center justify-center py-2 px-1 rounded-2xl font-bold text-xs transition-all border-2">
+          <span class="text-lg sm:text-xl mb-0.5">💄</span>
+          <span>Trang Điểm</span>
+        </button>
+        <button onclick="switchTab('dress')" data-tab="dress"
+          class="tab-btn flex flex-col items-center justify-center py-2 px-1 rounded-2xl font-bold text-xs transition-all border-2">
+          <span class="text-lg sm:text-xl mb-0.5">👗</span>
+          <span>Váy Dạ Hội</span>
+        </button>
+        <button onclick="switchTab('accessory')" data-tab="accessory"
+          class="tab-btn flex flex-col items-center justify-center py-2 px-1 rounded-2xl font-bold text-xs transition-all border-2">
+          <span class="text-lg sm:text-xl mb-0.5">👑</span>
+          <span>Phụ Kiện</span>
+        </button>
+        <button onclick="switchTab('background')" data-tab="background"
+          class="tab-btn flex flex-col items-center justify-center py-2 px-1 rounded-2xl font-bold text-xs transition-all border-2">
+          <span class="text-lg sm:text-xl mb-0.5">🏰</span>
+          <span>Bối Cảnh</span>
+        </button>
+      </nav>
+
+      <!-- NỘI DUNG TỦ ĐỒ ĐỘNG THEO TAB -->
+      <div id="wardrobe-panel" class="flex-1 overflow-y-auto max-h-[540px] pr-1 space-y-5">
+        <!-- Nội dung được render tự động bằng JavaScript -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL 1: THẺ CHÂN DUNG & CHỤP ẢNH CÔNG CHÚA -->
+  <div id="snapshot-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 border-4 border-pink-200 shadow-2xl relative animate-[fadeIn_0.25s_ease-out]">
+      <button onclick="closeSnapshotModal()" class="absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-600 font-bold flex items-center justify-center">
+        ✕
+      </button>
+
+      <div class="text-center mb-3">
+        <span class="inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-bold mb-1">
+          ✨ Thẻ Chân Dung Hoàng Gia ✨
+        </span>
+        <h2 id="card-princess-title" class="font-royal text-xl sm:text-2xl font-bold text-pink-600">
+          Công Chúa Hoa Hồng Lộng Lẫy
+        </h2>
+      </div>
+
+      <!-- Khung xem trước ảnh chân dung -->
+      <div class="relative mx-auto w-56 sm:w-64 aspect-[4/5] rounded-2xl overflow-hidden border-4 border-amber-300 shadow-lg mb-3 bg-pink-50">
+        <img id="snapshot-preview-img" src="" alt="Chân dung công chúa" class="w-full h-full object-cover" />
+      </div>
+
+      <!-- Nhận xét phong cách -->
+      <div class="bg-gradient-to-r from-pink-50 via-purple-50 to-amber-50 rounded-2xl p-3 border border-pink-200 text-center mb-4">
+        <div id="card-stars" class="text-amber-400 text-lg tracking-widest mb-1">⭐⭐⭐⭐⭐</div>
+        <p id="card-comment" class="text-xs sm:text-sm text-gray-700 font-medium leading-relaxed">
+          Sự kết hợp hoàn hảo giữa vẻ đẹp dịu dàng và nét kiêu sa bậc nhất vương quốc!
+        </p>
+      </div>
+
+      <!-- Nút hành động -->
+      <div class="grid grid-cols-2 gap-2.5">
+        <button onclick="saveToCollection()"
+          class="btn-cute py-2.5 px-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5">
+          <span>💖</span>
+          <span>Lưu Bộ Sưu Tập</span>
+        </button>
+        <button onclick="downloadPNG()"
+          class="btn-cute py-2.5 px-3 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5">
+          <span>⬇️</span>
+          <span>Tải Ảnh PNG</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: BỘ SƯU TẬP MINI TRONG TRANG -->
+  <div id="gallery-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-5 sm:p-6 border-4 border-purple-200 shadow-2xl relative max-h-[88vh] flex flex-col">
+      <div class="flex items-center justify-between pb-3 border-b border-purple-100">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🖼️</span>
+          <h2 class="font-royal text-xl font-bold text-purple-700">Bộ Sưu Tập Hoàng Gia</h2>
+        </div>
+        <button onclick="closeGalleryModal()" class="w-9 h-9 rounded-full bg-purple-100 hover:bg-purple-200 text-purple-600 font-bold flex items-center justify-center">
+          ✕
+        </button>
+      </div>
+
+      <div id="gallery-grid" class="flex-1 overflow-y-auto py-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <!-- Các thẻ công chúa đã lưu sẽ hiển thị ở đây -->
+      </div>
+    </div>
+  </div>
+
+  <!-- HỘP THÔNG BÁO NHẸ NHÀNG (TOAST) -->
+  <div id="toast-box" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-4">
+    <div class="bg-gray-900/90 text-white px-4 py-2.5 rounded-full shadow-xl text-xs sm:text-sm font-bold flex items-center gap-2 border border-pink-400/50">
+      <span id="toast-icon">✨</span>
+      <span id="toast-text">Đã lưu vào bộ sưu tập!</span>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       1. HỆ THỐNG ÂM THANH PHÉP THUẬT (WEB AUDIO API - KHÔNG CẦN FILE NGOÀI)
+       ========================================================================= */
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) audioCtx = new AudioContext();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // Phát hợp âm chuông lấp lánh nhẹ nhàng khi chọn đồ
+    function playSparkleSound(type = 'select') {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+
+        const now = audioCtx.currentTime;
+        const notes = type === 'magic' 
+          ? [523.25, 659.25, 783.99, 1046.50, 1318.51] // Đô - Mi - Sol - Đô cao - Mi cao
+          : type === 'camera'
+          ? [880, 1174.66, 1567.98]
+          : [659.25, 880, 1174.66]; // Chuông pha lê nhẹ
+
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.045);
+
+          gain.gain.setValueAtTime(0.001, now + idx * 0.045);
+          gain.gain.exponentialRampToValueAtTime(0.08, now + idx * 0.045 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.045 + 0.28);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.045);
+          osc.stop(now + idx * 0.045 + 0.3);
+        });
+      } catch (e) {
+        // Bỏ qua nếu trình duyệt chặn autoplay audio
+      }
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const icon = document.getElementById('sound-icon');
+      const label = document.getElementById('sound-label');
+      if (soundEnabled) {
+        icon.textContent = '🔊';
+        if (label) label.textContent = 'Âm thanh';
+        playSparkleSound('select');
+        showToast('🔊', 'Đã bật âm thanh phép thuật');
+      } else {
+        icon.textContent = '🔇';
+        if (label) label.textContent = 'Đã tắt';
+        showToast('🔇', 'Đã tắt âm thanh');
+      }
+    }
+
+    /* =========================================================================
+       2. CƠ SỞ DỮ LIỆU THỜI TRANG, TRANG ĐIỂM, TÓC & BỐI CẢNH
+       ========================================================================= */
+    const GAME_DATA = {
+      skins: [
+        { id: 'porcelain', name: 'Trắng Sứ', color: '#ffe8d6', stroke: '#dfa88c' },
+        { id: 'ivory', name: 'Trắng Hồng', color: '#ffe0bd', stroke: '#d49a7a' },
+        { id: 'peach', name: 'Hồng Đào', color: '#ffd1b3', stroke: '#c98868' },
+        { id: 'honey', name: 'Mật Ong', color: '#f1c29b', stroke: '#b87b56' },
+        { id: 'caramel', name: 'Nâu Ấm', color: '#d99b72', stroke: '#9c623e' },
+        { id: 'mocha', name: 'Bánh Quy', color: '#b57652', stroke: '#7a4629' }
+      ],
+      expressions: [
+        { id: 'sweet', name: 'Cười Dịu Dàng', icon: '😊' },
+        { id: 'sparkle', name: 'Mắt Long Lanh', icon: '🤩' },
+        { id: 'wink', name: 'Nháy Mắt Tinh Nghịch', icon: '😉' },
+        { id: 'gentle', name: 'E Ấp Kiêu Sa', icon: '🥰' },
+        { id: 'happy', name: 'Cười Tươi Rạng Rỡ', icon: '😄' }
+      ],
+      hairStyles: [
+        { id: 'long_wave', name: 'Tóc Dài Bồng Bềnh', icon: '🌊' },
+        { id: 'royal_bun', name: 'Búi Cao Hoàng Gia', icon: '👑' },
+        { id: 'twin_braids', name: 'Tết Bím Hai Bên', icon: '🎀' },
+        { id: 'curly_princess', name: 'Xoăn Sóng Lọn To', icon: '✨' },
+        { id: 'cute_bob', name: 'Tóc Ngắn Dễ Thương', icon: '🌸' },
+        { id: 'twin_tails', name: 'Buộc Hai Chùm Cao', icon: '🦋' }
+      ],
+      hairColors: [
+        { id: 'sun_gold', name: 'Vàng Nắng', main: '#facc15', dark: '#ca8a04', light: '#fef08a' },
+        { id: 'strawberry', name: 'Hồng Dâu', main: '#f472b6', dark: '#db2777', light: '#fbcfe8' },
+        { id: 'chestnut', name: 'Nâu Hạt Dẻ', main: '#854d0e', dark: '#422006', light: '#b45309' },
+        { id: 'lavender', name: 'Tím Oải Hương', main: '#a855f7', dark: '#6b21a8', light: '#e9d5ff' },
+        { id: 'ice_blue', name: 'Xanh Băng Giá', main: '#38bdf8', dark: '#0369a1', light: '#bae6fd' },
+        { id: 'jet_black', name: 'Đen Huyền', main: '#1e293b', dark: '#020617', light: '#475569' },
+        { id: 'ruby_red', name: 'Đỏ Rượu Vang', main: '#e11d48', dark: '#881337', light: '#fda4af' },
+        { id: 'mint_green', name: 'Xanh Bạc Hà', main: '#34d399', dark: '#065f46', light: '#a7f3d0' }
+      ],
+      eyeColors: [
+        { id: 'sapphire', name: 'Xanh Ngọc Bích', top: '#1d4ed8', bottom: '#38bdf8' },
+        { id: 'emerald', name: 'Xanh Lục Bảo', top: '#047857', bottom: '#34d399' },
+        { id: 'amethyst', name: 'Tím Thạch Anh', top: '#6d28d9', bottom: '#c084fc' },
+        { id: 'amber', name: 'Hổ Phách Vàng', top: '#b45309', bottom: '#fbbf24' },
+        { id: 'rose', name: 'Hồng Ngọc', top: '#be185d', bottom: '#f472b6' },
+        { id: 'chocolate', name: 'Nâu Socola', top: '#451a03', bottom: '#92400e' }
+      ],
+      blushStyles: [
+        { id: 'none', name: 'Tự Nhiên', color: 'transparent' },
+        { id: 'peach_soft', name: 'Má Hồng Đào', color: '#fb7185' },
+        { id: 'pink_cute', name: 'Hồng Phấn Baby', color: '#f472b6' },
+        { id: 'coral_warm', name: 'Cam San Hô', color: '#fb923c' }
+      ],
+      lipColors: [
+        { id: 'natural', name: 'Hồng Tự Nhiên', color: '#f472b6' },
+        { id: 'cherry', name: 'Đỏ Cherry', color: '#e11d48' },
+        { id: 'rose_berry', name: 'Hồng Dâu Ngọt', color: '#db2777' },
+        { id: 'coral_gloss', name: 'Cam Đào Bóng', color: '#f97316' },
+        { id: 'plum_royal', name: 'Đỏ Mận Hoàng Gia', color: '#9f1239' }
+      ],
+      faceStickers: [
+        { id: 'none', name: 'Không Họa Tiết', icon: '🚫' },
+        { id: 'hearts', name: 'Trái Tim Nhỏ', icon: '💕' },
+        { id: 'stars', name: 'Sao Lấp Lánh', icon: '✨' },
+        { id: 'freckles', name: 'Tàn Nhang Dễ Thương', icon: '🌸' },
+        { id: 'gem_bindi', name: 'Đá Quý Trán', icon: '💎' }
+      ],
+      dresses: [
+        { 
+          id: 'royal_pink', 
+          name: 'Váy Bồng Hoàng Gia', 
+          title: 'Công Chúa Hoa Hồng Lộng Lẫy',
+          primary: '#f472b6', secondary: '#fbcfe8', accent: '#facc15', shoe: '#db2777',
+          desc: 'Váy dạ hội tùng bồng nhiều tầng đính nơ vàng hoàng gia.'
+        },
+        { 
+          id: 'ice_queen', 
+          name: 'Nữ Hoàng Băng Giá', 
+          title: 'Nữ Hoàng Băng Tuyết Kiêu Sa',
+          primary: '#38bdf8', secondary: '#e0f2fe', accent: '#ffffff', shoe: '#0284c7',
+          desc: 'Váy lụa xanh pha lê lấp lánh bông tuyết và áo choàng voan.'
+        },
+        { 
+          id: 'flower_fairy', 
+          name: 'Váy Tiên Hoa Rừng', 
+          title: 'Nàng Tiên Hoa Mùa Xuân',
+          primary: '#34d399', secondary: '#fef08a', accent: '#f472b6', shoe: '#059669',
+          desc: 'Thiết kế cánh hoa xếp lớp mềm mại tràn đầy sức sống thiên nhiên.'
+        },
+        { 
+          id: 'starlight_night', 
+          name: 'Dạ Hội Sao Đêm', 
+          title: 'Công Chúa Ngân Hà Huyền Bí',
+          primary: '#4f46e5', secondary: '#c084fc', accent: '#fde047', shoe: '#3730a3',
+          desc: 'Sắc tím xanh ngân hà điểm xuyết ánh sao vàng rực rỡ.'
+        },
+        { 
+          id: 'fairytale_gold', 
+          name: 'Công Chúa Cổ Tích', 
+          title: 'Công Chúa Ánh Dương Vàng Son',
+          primary: '#f59e0b', secondary: '#fef3c7', accent: '#e11d48', shoe: '#d97706',
+          desc: 'Váy vàng ánh kim trễ vai cổ điển đính hoa hồng đỏ thắm.'
+        },
+        { 
+          id: 'sakura_kimono', 
+          name: 'Váy Ren Anh Đào', 
+          title: 'Tiểu Thư Hoa Anh Đào Ngọt Ngào',
+          primary: '#fb7185', secondary: '#fff1f2', accent: '#fda4af', shoe: '#e11d48',
+          desc: 'Váy tầng ren trắng phối hồng phấn dịu dàng như cánh hoa đào.'
+        }
+      ],
+      headwears: [
+        { id: 'none', name: 'Không Đội', icon: '🚫' },
+        { id: 'gold_crown', name: 'Vương Miện Vàng', icon: '👑' },
+        { id: 'crystal_tiara', name: 'Vương Miện Pha Lê', icon: '💎' },
+        { id: 'flower_clip', name: 'Kẹp Tóc Hoa Hồng', icon: '🌹' },
+        { id: 'ribbon_bow', name: 'Nơ Lụa Khổng Lồ', icon: '🎀' }
+      ],
+      necklaces: [
+        { id: 'none', name: 'Không Vòng Cổ', icon: '🚫' },
+        { id: 'pearl', name: 'Vòng Ngọc Trai', icon: '📿' },
+        { id: 'heart_ruby', name: 'Dây Chuyền Trái Tim', icon: '💖' },
+        { id: 'star_choker', name: 'Vòng Cổ Ánh Sao', icon: '⭐' }
+      ],
+      handItems: [
+        { id: 'none', name: 'Không Cầm Tay', icon: '🚫' },
+        { id: 'magic_wand', name: 'Đũa Phép Thần Tiên', icon: '🪄' },
+        { id: 'royal_bag', name: 'Túi Xách Hoàng Gia', icon: '👜' },
+        { id: 'flower_bouquet', name: 'Bó Hoa Hồng Nhỏ', icon: '💐' }
+      ],
+      wings: [
+        { id: 'none', name: 'Không Cánh', icon: '🚫' },
+        { id: 'fairy_pink', name: 'Cánh Tiên Hồng', icon: '🧚' },
+        { id: 'butterfly_blue', name: 'Cánh Bướm Xanh', icon: '🦋' },
+        { id: 'angel_gold', name: 'Cánh Thiên Thần', icon: '🕊️' }
+      ],
+      backgrounds: [
+        { id: 'palace', name: 'Sảnh Cung Điện Vàng', icon: '🏰' },
+        { id: 'garden', name: 'Khu Vườn Hoa Hồng', icon: '🌹' },
+        { id: 'ice', name: 'Lâu Đài Băng Tuyết', icon: '❄️' },
+        { id: 'forest', name: 'Rừng Phép Thuật Đêm Sao', icon: '🌌' }
+      ]
+    };
+
+    /* =========================================================================
+       3. TRẠNG THÁI HIỆN TẠI CỦA CÔNG CHÚA
+       ========================================================================= */
+    const DEFAULT_STATE = {
+      skin: 'ivory',
+      expression: 'sweet',
+      hairStyle: 'long_wave',
+      hairColor: 'sun_gold',
+      eyeColor: 'sapphire',
+      blush: 'peach_soft',
+      lipColor: 'natural',
+      faceSticker: 'none',
+      dress: 'royal_pink',
+      headwear: 'gold_crown',
+      necklace: 'pearl',
+      handItem: 'none',
+      wings: 'none',
+      background: 'palace'
+    };
+
+    let state = { ...DEFAULT_STATE };
+    let currentTab = 'face';
+    let savedCollection = [];
+
+    // Tải bộ sưu tập từ localStorage nếu có
+    try {
+      const stored = localStorage.getItem('royal_princess_gallery');
+      if (stored) savedCollection = JSON.parse(stored);
+    } catch (e) {}
+
+    /* =========================================================================
+       4. HÀM VẼ ĐỒ HỌA SVG CHI TIẾT CHO TỪNG LỚP NHÂN VẬT
+       ========================================================================= */
+    function renderPrincess() {
+      const skinObj = GAME_DATA.skins.find(s => s.id === state.skin) || GAME_DATA.skins[1];
+      const hairCol = GAME_DATA.hairColors.find(h => h.id === state.hairColor) || GAME_DATA.hairColors[0];
+      const eyeCol = GAME_DATA.eyeColors.find(e => e.id === state.eyeColor) || GAME_DATA.eyeColors[0];
+      const blushObj = GAME_DATA.blushStyles.find(b => b.id === state.blush) || GAME_DATA.blushStyles[1];
+      const lipObj = GAME_DATA.lipColors.find(l => l.id === state.lipColor) || GAME_DATA.lipColors[0];
+      const dressObj = GAME_DATA.dresses.find(d => d.id === state.dress) || GAME_DATA.dresses[0];
+
+      // Cập nhật màu da & giày
+      document.querySelectorAll('.skin-fill').forEach(el => {
+        el.setAttribute('fill', skinObj.color);
+        if (el.hasAttribute('stroke')) el.setAttribute('stroke', skinObj.stroke);
+      });
+      document.querySelectorAll('.shoe-fill').forEach(el => {
+        el.setAttribute('fill', dressObj.shoe);
+      });
+
+      // 1. Vẽ Bối cảnh
+      renderBackground(state.background);
+
+      // 2. Vẽ Cánh tiên
+      renderWings(state.wings);
+
+      // 3. Vẽ Tóc sau & Tóc trước
+      renderHair(state.hairStyle, hairCol);
+
+      // 4. Vẽ Trang điểm má & họa tiết mặt
+      renderMakeup(blushObj, state.faceSticker);
+
+      // 5. Vẽ Mắt, Lông mày & Môi
+      renderEyesAndMouth(state.expression, eyeCol, lipObj);
+
+      // 6. Vẽ Váy & Trang phục
+      renderDress(dressObj);
+
+      // 7. Vẽ Phụ kiện (Vòng cổ, Vương miện, Đồ cầm tay)
+      renderNecklace(state.necklace);
+      renderHeadwear(state.headwear);
+      renderHandItem(state.handItem);
+
+      // Cập nhật nhãn bối cảnh & đánh giá nhanh
+      const bgObj = GAME_DATA.backgrounds.find(b => b.id === state.background);
+      if (bgObj) document.getElementById('bg-title-badge').textContent = bgObj.name;
+      updateLiveScore();
+    }
+
+    // --- VẼ BỐI CẢNH ---
+    function renderBackground(bgId) {
+      const container = document.getElementById('layer-background');
+      if (bgId === 'palace') {
+        container.innerHTML = `
+          <rect width="400" height="500" fill="url(#bg-palace)"/>
+          <!-- Cột đá cẩm thạch hoàng gia -->
+          <rect x="24" y="30" width="32" height="410" rx="6" fill="#fffbeb" opacity="0.7"/>
+          <rect x="344" y="30" width="32" height="410" rx="6" fill="#fffbeb" opacity="0.7"/>
+          <!-- Cửa vòm cung điện -->
+          <path d="M90 440 L90 150 Q200 40 310 150 L310 440 Z" fill="#fff7ed" opacity="0.65" stroke="#fcd34d" stroke-width="4"/>
+          <!-- Đèn chùm pha lê -->
+          <line x1="200" y1="0" x2="200" y2="35" stroke="#f59e0b" stroke-width="3"/>
+          <path d="M165 45 Q200 65 235 45" fill="none" stroke="#f59e0b" stroke-width="3"/>
+          <circle cx="170" cy="42" r="4" fill="#fef08a"/>
+          <circle cx="200" cy="52" r="5" fill="#fef08a"/>
+          <circle cx="230" cy="42" r="4" fill="#fef08a"/>
+          <!-- Thảm đỏ hoàng gia -->
+          <polygon points="110,440 290,440 340,500 60,500" fill="#f43f5e" opacity="0.8"/>
+          <polygon points="122,440 278,440 322,500 78,500" fill="none" stroke="#fde047" stroke-width="3"/>
+        `;
+      } else if (bgId === 'garden') {
+        container.innerHTML = `
+          <rect width="400" height="500" fill="url(#bg-garden)"/>
+          <!-- Ánh nắng dịu -->
+          <circle cx="330" cy="70" r="45" fill="#fef9c3" opacity="0.75"/>
+          <!-- Bụi hoa & vòm hoa hồng -->
+          <path d="M40 450 Q40 90 200 90 Q360 90 360 450" fill="none" stroke="#86efac" stroke-width="14" opacity="0.75"/>
+          <circle cx="65" cy="210" r="14" fill="#fb7185"/>
+          <circle cx="105" cy="135" r="16" fill="#f43f5e"/>
+          <circle cx="200" cy="95" r="18" fill="#fb7185"/>
+          <circle cx="295" cy="135" r="16" fill="#f43f5e"/>
+          <circle cx="335" cy="210" r="14" fill="#fb7185"/>
+          <!-- Thảm cỏ hoa -->
+          <ellipse cx="200" cy="480" rx="240" ry="60" fill="#bbf7d0"/>
+          <circle cx="80" cy="465" r="5" fill="#f472b6"/>
+          <circle cx="320" cy="470" r="6" fill="#facc15"/>
+          <circle cx="120" cy="485" r="5" fill="#ffffff"/>
+        `;
+      } else if (bgId === 'ice') {
+        container.innerHTML = `
+          <rect width="400" height="500" fill="url(#bg-ice)"/>
+          <!-- Đỉnh tháp băng pha lê -->
+          <polygon points="70,440 110,120 150,440" fill="#ffffff" opacity="0.55"/>
+          <polygon points="250,440 290,110 330,440" fill="#ffffff" opacity="0.55"/>
+          <polygon points="140,440 200,70 260,440" fill="#f0f9ff" opacity="0.65"/>
+          <!-- Bông tuyết rơi -->
+          <g fill="#ffffff" opacity="0.85">
+            <circle cx="65" cy="95" r="4"/>
+            <circle cx="335" cy="85" r="5"/>
+            <circle cx="95" cy="240" r="3.5"/>
+            <circle cx="315" cy="260" r="4"/>
+            <circle cx="55" cy="350" r="3"/>
+            <circle cx="350" cy="340" r="3.5"/>
+          </g>
+          <!-- Sàn băng phản chiếu -->
+          <ellipse cx="200" cy="485" rx="250" ry="65" fill="#e0f2fe"/>
+        `;
+      } else {
+        // Rừng phép thuật đêm sao
+        container.innerHTML = `
+          <rect width="400" height="500" fill="url(#bg-forest)"/>
+          <!-- Mặt trăng lưỡi liềm vàng -->
+          <circle cx="315" cy="80" r="34" fill="#fef08a"/>
+          <circle cx="302" cy="72" r="30" fill="#1e1b4b"/>
+          <!-- Ngôi sao lấp lánh -->
+          <g fill="#fef9c3">
+            <circle cx="70" cy="70" r="2.5"/>
+            <circle cx="140" cy="50" r="2"/>
+            <circle cx="220" cy="85" r="3"/>
+            <circle cx="90" cy="160" r="2"/>
+            <circle cx="340" cy="180" r="2.5"/>
+            <circle cx="60" cy="280" r="3" fill="#f472b6"/>
+            <circle cx="345" cy="290" r="3" fill="#38bdf8"/>
+          </g>
+          <!-- Thảm rêu đêm huyền ảo -->
+          <ellipse cx="200" cy="485" rx="250" ry="65" fill="#311042"/>
+        `;
+      }
+    }
+
+    // --- VẼ CÁNH TIÊN ---
+    function renderWings(wingId) {
+      const container = document.getElementById('layer-wings');
+      if (wingId === 'none') {
+        container.innerHTML = '';
+        return;
+      }
+      if (wingId === 'fairy_pink') {
+        container.innerHTML = `
+          <g opacity="0.82">
+            <path d="M180 270 C110 200, 65 235, 105 295 C75 320, 115 365, 180 310 Z" fill="#fbcfe8" stroke="#f472b6" stroke-width="2"/>
+            <path d="M220 270 C290 200, 335 235, 295 295 C325 320, 285 365, 220 310 Z" fill="#fbcfe8" stroke="#f472b6" stroke-width="2"/>
+            <circle cx="115" cy="255" r="6" fill="#ffffff" opacity="0.7"/>
+            <circle cx="285" cy="255" r="6" fill="#ffffff" opacity="0.7"/>
+          </g>
+        `;
+      } else if (wingId === 'butterfly_blue') {
+        container.innerHTML = `
+          <g opacity="0.85">
+            <path d="M180 268 C100 185, 55 245, 110 300 C80 335, 125 375, 180 312 Z" fill="#bae6fd" stroke="#0284c7" stroke-width="2.5"/>
+            <path d="M220 268 C300 185, 345 245, 290 300 C320 335, 275 375, 220 312 Z" fill="#bae6fd" stroke="#0284c7" stroke-width="2.5"/>
+            <path d="M165 272 C125 230, 95 255, 125 288" fill="none" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M235 272 C275 230, 305 255, 275 288" fill="none" stroke="#38bdf8" stroke-width="2"/>
+          </g>
+        `;
+      } else if (wingId === 'angel_gold') {
+        container.innerHTML = `
+          <g opacity="0.92">
+            <path d="M180 265 C115 215, 70 255, 95 315 C115 340, 150 330, 180 305 Z" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+            <path d="M220 265 C285 215, 330 255, 305 315 C285 340, 250 330, 220 305 Z" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+          </g>
+        `;
+      }
+    }
+
+    // --- VẼ TÓC SAU & TÓC MÁI ---
+    function renderHair(styleId, col) {
+      const back = document.getElementById('layer-hair-back');
+      const front = document.getElementById('layer-hair-front');
+
+      // Tóc mái chung mềm mại ôm khuôn mặt
+      let frontSVG = `
+        <!-- Khối tóc đỉnh đầu -->
+        <path d="M138 175 C135 110, 265 110, 262 175 C255 152, 238 142, 220 144 C205 162, 195 162, 180 144 C162 142, 145 152, 138 175 Z" 
+              fill="${col.main}" stroke="${col.dark}" stroke-width="1.5"/>
+        <!-- Tóc mái lưa thưa dễ thương -->
+        <path d="M156 146 Q168 174 176 176 Q178 158 186 145" fill="${col.main}" stroke="${col.dark}" stroke-width="1.2"/>
+        <path d="M184 144 Q198 178 204 178 Q208 158 216 144" fill="${col.main}" stroke="${col.dark}" stroke-width="1.2"/>
+        <path d="M214 145 Q228 174 238 175 Q238 155 244 148" fill="${col.main}" stroke="${col.dark}" stroke-width="1.2"/>
+        <!-- Lọn tóc mai ôm hai bên má -->
+        <path d="M144 162 Q136 205 150 236 Q155 212 152 176 Z" fill="${col.main}" stroke="${col.dark}" stroke-width="1.2"/>
+        <path d="M256 162 Q264 205 250 236 Q245 212 248 176 Z" fill="${col.main}" stroke="${col.dark}" stroke-width="1.2"/>
+        <!-- Ánh sáng bóng mượt trên tóc -->
+        <path d="M162 134 Q200 124 238 134" fill="none" stroke="${col.light}" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+      `;
+
+      let backSVG = '';
+
+      if (styleId === 'long_wave') {
+        backSVG = `
+          <path d="M135 165 C115 240, 118 345, 145 395 Q172 385 185 398 Q200 385 215 398 Q228 385 255 395 C282 345, 285 240, 265 165 Z" 
+                fill="${col.main}" stroke="${col.dark}" stroke-width="1.5"/>
+          <path d="M135 165 C115 240, 118 345, 145 395 Q200 385 255 395 C282 345, 285 240, 265 165 Z" fill="url(#hair-shine)"/>
+        `;
+      } else if (styleId === 'royal_bun') {
+        backSVG = `
+          <!-- Búi tóc tròn cao -->
+          <circle cx="200" cy="106" r="34" fill="${col.main}" stroke="${col.dark}" stroke-width="1.5"/>
+          <path d="M178 100 Q200 84 222 100" fill="none" stroke="${col.light}" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+          <path d="M142 165 Q200 220 258 165 L245 225 Q200 235 155 225 Z" fill="${col.dark}"/>
+        `;
+      } else if (styleId === 'twin_braids') {
+        backSVG = `
+          <path d="M142 165 Q200 220 258 165 L245 225 Q200 235 155 225 Z" fill="${col.dark}"/>
+          <!-- Bím tóc trái -->
+          <g>
+            <ellipse cx="136" cy="225" rx="11" ry="15" fill="${col.main}" stroke="${col.dark}" stroke-width="1.4"/>
+            <ellipse cx="133" cy="248" rx="11" ry="15" fill="${col.main}" stroke="${col.dark}" stroke-width="1.4"/>
+            <ellipse cx="131" cy="271" rx="10" ry="14" fill="${col.main}" stroke="${col.dark}" stroke-width="1.4"/>
+            <path d="M124 282 L138 282 L131 302 Z" fill="${col.main}" stroke="${col.dark}" stroke-width="1.2"/>
+            <circle cx="131" cy="283" r="4" fill="#f43f5e"/>
+          </g>
+          <!-- Bím tóc phải -->
+          <g>
+            <ellipse cx="264" cy="225" rx="11" ry="15" fill="${col.main}" stroke="${col.dark}" stroke-width="1.4"/>
+            <ellipse cx="267" cy="248" rx="11" ry="15" fill="${col.main}" stroke="${col.dark}" stroke-width="1.4"/>
+            <ellipse cx="269" cy="271" rx="10" ry="14" fill="${col.main}" stroke="${col.dark}" stroke-width="1.4"/>
+            <path d="M262 282 L276 282 L269 302 Z" fill="${col.main}" stroke="${col.dark}" stroke-width="1.2"/>
+            <circle cx="269" cy="283" r="4" fill="#f43f5e"/>
+          </g>
+        `;
+      } else if (styleId === 'curly_princess') {
+        backSVG = `
+          <g fill="${col.main}" stroke="${col.dark}" stroke-width="1.4">
+            <circle cx="132" cy="200" r="22"/>
+            <circle cx="268" cy="200" r="22"/>
+            <circle cx="124" cy="242" r="25"/>
+            <circle cx="276" cy="242" r="25"/>
+            <circle cx="130" cy="288" r="26"/>
+            <circle cx="270" cy="288" r="26"/>
+            <circle cx="145" cy="332" r="24"/>
+            <circle cx="255" cy="332" r="24"/>
+            <rect x="142" y="170" width="116" height="165" rx="20" stroke="none"/>
+          </g>
+        `;
+      } else if (styleId === 'cute_bob') {
+        backSVG = `
+          <path d="M136 165 C124 205, 130 245, 155 250 L245 250 C270 245, 276 205, 264 165 Z" 
+                fill="${col.main}" stroke="${col.dark}" stroke-width="1.5"/>
+        `;
+      } else if (styleId === 'twin_tails') {
+        backSVG = `
+          <path d="M142 165 Q200 220 258 165 L245 225 Q200 235 155 225 Z" fill="${col.dark}"/>
+          <!-- Chùm tóc cao trái -->
+          <path d="M142 145 C95 135, 82 225, 108 310 C122 285, 128 220, 145 165 Z" fill="${col.main}" stroke="${col.dark}" stroke-width="1.5"/>
+          <circle cx="142" cy="148" r="6" fill="#f472b6"/>
+          <!-- Chùm tóc cao phải -->
+          <path d="M258 145 C305 135, 318 225, 292 310 C278 285, 272 220, 255 165 Z" fill="${col.main}" stroke="${col.dark}" stroke-width="1.5"/>
+          <circle cx="258" cy="148" r="6" fill="#f472b6"/>
+        `;
+      }
+
+      back.innerHTML = backSVG;
+      front.innerHTML = frontSVG;
+    }
+
+    // --- VẼ TRANG ĐIỂM MÁ & HỌA TIẾT MẶT ---
+    function renderMakeup(blushObj, stickerId) {
+      const container = document.getElementById('layer-makeup-blush');
+      let svg = '';
+
+      if (blushObj.id !== 'none') {
+        svg += `
+          <ellipse cx="165" cy="202" rx="13" ry="7.5" fill="${blushObj.color}" opacity="0.42"/>
+          <ellipse cx="235" cy="202" rx="13" ry="7.5" fill="${blushObj.color}" opacity="0.42"/>
+        `;
+      }
+
+      if (stickerId === 'hearts') {
+        svg += `
+          <path d="M159 205 c-2-3 -6-1 -6 2 c0 3 6 6 6 6 c0 0 6-3 6-6 c0-3 -4-5 -6-2 z" fill="#f43f5e"/>
+          <path d="M241 205 c-2-3 -6-1 -6 2 c0 3 6 6 6 6 c0 0 6-3 6-6 c0-3 -4-5 -6-2 z" fill="#f43f5e"/>
+        `;
+      } else if (stickerId === 'stars') {
+        svg += `
+          <polygon points="159,199 161,203 165,204 162,207 163,211 159,209 155,211 156,207 153,204 157,203" fill="#facc15"/>
+          <polygon points="241,199 243,203 247,204 244,207 245,211 241,209 237,211 238,207 235,204 239,203" fill="#facc15"/>
+        `;
+      } else if (stickerId === 'freckles') {
+        svg += `
+          <g fill="#b45309" opacity="0.55">
+            <circle cx="162" cy="201" r="1.3"/><circle cx="168" cy="203" r="1.3"/><circle cx="164" cy="206" r="1.3"/>
+            <circle cx="238" cy="201" r="1.3"/><circle cx="232" cy="203" r="1.3"/><circle cx="236" cy="206" r="1.3"/>
+          </g>
+        `;
+      } else if (stickerId === 'gem_bindi') {
+        svg += `
+          <polygon points="200,155 204,161 200,167 196,161" fill="#ec4899" stroke="#fde047" stroke-width="1"/>
+        `;
+      }
+
+      container.innerHTML = svg;
+    }
+
+    // --- VẼ MẮT ANIME LONG LANH & BIỂU CẢM ---
+    function renderEyesAndMouth(expr, eyeCol, lipObj) {
+      const container = document.getElementById('layer-eyes-mouth');
+
+      // Mắt trái chuẩn anime
+      const leftEye = `
+        <g>
+          <ellipse cx="174" cy="188" rx="12.5" ry="14" fill="#ffffff"/>
+          <ellipse cx="174" cy="189" rx="9.5" ry="11.5" fill="${eyeCol.top}"/>
+          <ellipse cx="174" cy="192" rx="7.5" ry="7.5" fill="${eyeCol.bottom}"/>
+          <circle cx="174" cy="189" r="4.5" fill="#1e1b4b"/>
+          <!-- Điểm sáng long lanh -->
+          <circle cx="170" cy="184" r="3.5" fill="#ffffff"/>
+          <circle cx="178" cy="193" r="1.8" fill="#ffffff"/>
+          <!-- Viền mi trên cong vút -->
+          <path d="M160 184 Q174 172 187 183" fill="none" stroke="#1e1b4b" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M161 182 L157 178" stroke="#1e1b4b" stroke-width="2" stroke-linecap="round"/>
+        </g>
+      `;
+
+      // Mắt phải (có thể nháy mắt nếu biểu cảm wink)
+      const rightEye = expr === 'wink' 
+        ? `
+          <path d="M214 189 Q226 180 238 189" fill="none" stroke="#1e1b4b" stroke-width="3" stroke-linecap="round"/>
+          <path d="M236 187 L241 183" stroke="#1e1b4b" stroke-width="2" stroke-linecap="round"/>
+        `
+        : `
+          <g>
+            <ellipse cx="226" cy="188" rx="12.5" ry="14" fill="#ffffff"/>
+            <ellipse cx="226" cy="189" rx="9.5" ry="11.5" fill="${eyeCol.top}"/>
+            <ellipse cx="226" cy="192" rx="7.5" ry="7.5" fill="${eyeCol.bottom}"/>
+            <circle cx="226" cy="189" r="4.5" fill="#1e1b4b"/>
+            <circle cx="222" cy="184" r="3.5" fill="#ffffff"/>
+            <circle cx="230" cy="193" r="1.8" fill="#ffffff"/>
+            <path d="M213 183 Q226 172 240 184" fill="none" stroke="#1e1b4b" stroke-width="2.8" stroke-linecap="round"/>
+            <path d="M239 182 L243 178" stroke="#1e1b4b" stroke-width="2" stroke-linecap="round"/>
+          </g>
+        `;
+
+      // Sao lấp lánh thêm trong mắt nếu chọn biểu cảm 'sparkle'
+      const extraEyeSparkle = expr === 'sparkle'
+        ? `
+          <polygon points="174,181 175.5,184 178.5,185.5 175.5,187 174,190 172.5,187 169.5,185.5 172.5,184" fill="#fef08a"/>
+          <polygon points="226,181 227.5,184 230.5,185.5 227.5,187 226,190 224.5,187 221.5,185.5 224.5,184" fill="#fef08a"/>
+        ` : '';
+
+      // Miệng theo biểu cảm
+      let mouthSVG = '';
+      if (expr === 'happy') {
+        mouthSVG = `
+          <path d="M192 212 Q200 224 208 212 Z" fill="${lipObj.color}" stroke="#9f1239" stroke-width="1"/>
+          <path d="M195 216 Q200 221 205 216" fill="#fda4af"/>
+        `;
+      } else if (expr === 'gentle') {
+        mouthSVG = `
+          <ellipse cx="200" cy="214" rx="4.5" ry="3.2" fill="${lipObj.color}"/>
+          <ellipse cx="199" cy="213" rx="1.8" ry="1" fill="#ffffff" opacity="0.7"/>
+        `;
+      } else {
+        mouthSVG = `
+          <path d="M193 212 Q200 218 207 212" fill="none" stroke="${lipObj.color}" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M196 214 Q200 216 204 214" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.6"/>
+        `;
+      }
+
+      container.innerHTML = `
+        <!-- Lông mày thanh tú -->
+        <path d="M162 170 Q174 166 184 170" fill="none" stroke="#78350f" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M216 170 Q226 166 238 170" fill="none" stroke="#78350f" stroke-width="1.8" stroke-linecap="round"/>
+
+        <!-- Đôi mắt có chớp mắt tự nhiên -->
+        <g class="eye-blink-group">
+          ${leftEye}
+          ${rightEye}
+          ${extraEyeSparkle}
+        </g>
+
+        <!-- Mũi nhỏ xinh -->
+        <path d="M199 201 Q201 203 199 204" fill="none" stroke="#c98868" stroke-width="1.4" stroke-linecap="round"/>
+
+        <!-- Môi xinh -->
+        ${mouthSVG}
+      `;
+    }
+
+    // --- VẼ VÁY DẠ HỘI CÔNG CHÚA CHI TIẾT ---
+    function renderDress(d) {
+      const container = document.getElementById('layer-dress');
+      
+      // Các mẫu thiết kế váy khác nhau theo từng bộ
+      if (d.id === 'ice_queen') {
+        container.innerHTML = `
+          <!-- Áo choàng voan tuyết -->
+          <path d="M164 252 L115 445 L285 445 L236 252 Z" fill="${d.secondary}" opacity="0.5"/>
+          <!-- Tùng váy dài lấp lánh -->
+          <path d="M174 302 L128 452 Q200 468 272 452 L226 302 Z" fill="${d.primary}" stroke="#0284c7" stroke-width="1.5"/>
+          <path d="M178 302 L152 454 Q200 464 248 454 L222 302 Z" fill="${d.secondary}" opacity="0.45"/>
+          <!-- Thân áo corset pha lê -->
+          <path d="M168 254 Q200 266 232 254 L226 304 Q200 312 174 304 Z" fill="${d.primary}" stroke="#0284c7" stroke-width="1.5"/>
+          <path d="M172 254 Q200 268 228 254" fill="none" stroke="#ffffff" stroke-width="4"/>
+          <!-- Bông tuyết trang trí -->
+          <circle cx="200" cy="276" r="5" fill="#ffffff"/>
+          <circle cx="175" cy="380" r="4" fill="#ffffff" opacity="0.8"/>
+          <circle cx="225" cy="400" r="4" fill="#ffffff" opacity="0.8"/>
+          <circle cx="200" cy="425" r="5" fill="#ffffff" opacity="0.8"/>
+        `;
+      } else if (d.id === 'flower_fairy') {
+        container.innerHTML = `
+          <!-- Váy cánh hoa xếp lớp -->
+          <path d="M173 300 L122 415 Q148 432 174 415 Q200 435 226 415 Q252 432 278 415 L227 300 Z" fill="${d.primary}" stroke="#059669" stroke-width="1.5"/>
+          <path d="M174 300 L140 375 Q170 390 200 372 Q230 390 260 375 L226 300 Z" fill="${d.secondary}" opacity="0.9"/>
+          <!-- Thân áo tiên hoa -->
+          <path d="M168 254 Q200 264 232 254 L226 302 Q200 310 174 302 Z" fill="${d.primary}" stroke="#059669" stroke-width="1.5"/>
+          <!-- Tay áo bồng cánh hoa -->
+          <ellipse cx="163" cy="256" rx="11" ry="8" fill="${d.secondary}" stroke="#059669" stroke-width="1"/>
+          <ellipse cx="237" cy="256" rx="11" ry="8" fill="${d.secondary}" stroke="#059669" stroke-width="1"/>
+          <!-- Hoa hồng nhỏ ở eo -->
+          <circle cx="200" cy="304" r="7" fill="${d.accent}"/>
+          <circle cx="188" cy="303" r="5" fill="#ffffff"/>
+          <circle cx="212" cy="303" r="5" fill="#ffffff"/>
+        `;
+      } else if (d.id === 'starlight_night') {
+        container.innerHTML = `
+          <!-- Tùng váy dạ hội ngân hà -->
+          <path d="M173 302 L115 448 Q200 470 285 448 L227 302 Z" fill="${d.primary}" stroke="#1e1b4b" stroke-width="1.5"/>
+          <path d="M176 302 L138 446 Q200 462 262 446 L224 302 Z" fill="${d.secondary}" opacity="0.35"/>
+          <!-- Thân áo trễ vai -->
+          <path d="M166 256 Q200 266 234 256 L226 304 Q200 312 174 304 Z" fill="${d.primary}" stroke="#1e1b4b" stroke-width="1.5"/>
+          <path d="M160 260 Q200 272 240 260" fill="none" stroke="${d.accent}" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Ngôi sao vàng lấp lánh trên váy -->
+          <g fill="${d.accent}">
+            <circle cx="165" cy="365" r="3"/>
+            <circle cx="235" cy="375" r="3.5"/>
+            <circle cx="195" cy="405" r="4"/>
+            <circle cx="155" cy="425" r="2.5"/>
+            <circle cx="245" cy="430" r="3"/>
+          </g>
+        `;
+      } else {
+        // Váy bồng hoàng gia / cổ tích / anh đào (3 tầng bồng bềnh cực xinh)
+        container.innerHTML = `
+          <!-- Tầng váy dưới cùng -->
+          <path d="M172 300 L114 438 Q200 462 286 438 L228 300 Z" fill="${d.primary}" stroke="rgba(131,24,67,0.35)" stroke-width="1.5"/>
+          <!-- Tầng ren giữa -->
+          <path d="M174 300 L132 392 Q166 406 200 392 Q234 406 268 392 L226 300 Z" fill="${d.secondary}" opacity="0.95"/>
+          <!-- Tầng phủ trên -->
+          <path d="M175 300 L146 352 Q200 366 254 352 L225 300 Z" fill="${d.primary}"/>
+          <!-- Tay áo phồng công chúa -->
+          <circle cx="163" cy="257" r="12" fill="${d.secondary}" stroke="rgba(131,24,67,0.3)" stroke-width="1.2"/>
+          <circle cx="237" cy="257" r="12" fill="${d.secondary}" stroke="rgba(131,24,67,0.3)" stroke-width="1.2"/>
+          <!-- Thân áo corset -->
+          <path d="M168 254 Q200 266 232 254 L226 303 Q200 311 174 303 Z" fill="${d.primary}" stroke="rgba(131,24,67,0.35)" stroke-width="1.5"/>
+          <!-- Dây đan corset trước ngực -->
+          <path d="M192 266 L208 276 M208 266 L192 276 M192 280 L208 290 M208 280 L192 290" stroke="${d.accent}" stroke-width="2" stroke-linecap="round"/>
+          <!-- Nơ lớn ở thắt lưng -->
+          <path d="M200 303 L184 295 L186 311 Z" fill="${d.accent}"/>
+          <path d="M200 303 L216 295 L214 311 Z" fill="${d.accent}"/>
+          <circle cx="200" cy="303" r="4.5" fill="#ffffff" stroke="${d.accent}" stroke-width="1.5"/>
+        `;
+      }
+    }
+
+    // --- VẼ VÒNG CỔ ---
+    function renderNecklace(neckId) {
+      const container = document.getElementById('layer-necklace');
+      if (neckId === 'none') {
+        container.innerHTML = '';
+      } else if (neckId === 'pearl') {
+        container.innerHTML = `
+          <g fill="#ffffff" stroke="#cbd5e1" stroke-width="0.7">
+            <circle cx="188" cy="244" r="2.6"/>
+            <circle cx="193" cy="247" r="2.8"/>
+            <circle cx="200" cy="248" r="3.2"/>
+            <circle cx="207" cy="247" r="2.8"/>
+            <circle cx="212" cy="244" r="2.6"/>
+          </g>
+        `;
+      } else if (neckId === 'heart_ruby') {
+        container.innerHTML = `
+          <path d="M188 242 Q200 252 212 242" fill="none" stroke="#facc15" stroke-width="1.6"/>
+          <path d="M200 248 c-2.5-3.5 -7.5-1.2 -7.5 2.5 c0 3.8 7.5 7.5 7.5 7.5 c0 0 7.5-3.7 7.5-7.5 c0-3.7 -5-6 -7.5-2.5 z" fill="#e11d48"/>
+        `;
+      } else if (neckId === 'star_choker') {
+        container.innerHTML = `
+          <path d="M189 242 Q200 246 211 242" fill="none" stroke="#ec4899" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="200" cy="245" r="3.5" fill="#fde047"/>
+        `;
+      }
+    }
+
+    // --- VẼ PHỤ KIỆN TÓC (VƯƠNG MIỆN / KẸP / NƠ) ---
+    function renderHeadwear(headId) {
+      const container = document.getElementById('layer-headwear');
+      if (headId === 'none') {
+        container.innerHTML = '';
+      } else if (headId === 'gold_crown') {
+        container.innerHTML = `
+          <g transform="translate(0, -2)">
+            <path d="M174 132 L170 110 L186 121 L200 102 L214 121 L230 110 L226 132 Z" 
+                  fill="#facc15" stroke="#b45309" stroke-width="1.6" stroke-linejoin="round"/>
+            <circle cx="200" cy="121" r="3.5" fill="#e11d48"/>
+            <circle cx="183" cy="124" r="2.5" fill="#38bdf8"/>
+            <circle cx="217" cy="124" r="2.5" fill="#38bdf8"/>
+          </g>
+        `;
+      } else if (headId === 'crystal_tiara') {
+        container.innerHTML = `
+          <path d="M172 133 Q200 112 228 133" fill="none" stroke="#e0f2fe" stroke-width="3"/>
+          <polygon points="200,104 206,120 200,130 194,120" fill="#7dd3fc" stroke="#0284c7" stroke-width="1.2"/>
+          <polygon points="184,114 188,125 184,132 180,125" fill="#bae6fd" stroke="#0284c7" stroke-width="1"/>
+          <polygon points="216,114 220,125 216,132 212,125" fill="#bae6fd" stroke="#0284c7" stroke-width="1"/>
+        `;
+      } else if (headId === 'flower_clip') {
+        container.innerHTML = `
+          <g transform="translate(238, 144)">
+            <circle cx="0" cy="0" r="11" fill="#fb7185" stroke="#be123c" stroke-width="1.2"/>
+            <circle cx="0" cy="0" r="6" fill="#fda4af"/>
+            <circle cx="0" cy="0" r="2.5" fill="#fef08a"/>
+            <path d="M8 6 Q16 4 14 12 Q8 12 8 6 Z" fill="#34d399"/>
+          </g>
+        `;
+      } else if (headId === 'ribbon_bow') {
+        container.innerHTML = `
+          <g transform="translate(200, 124)">
+            <path d="M0 0 L-26 -14 Q-32 0 -24 14 Z" fill="#f43f5e" stroke="#9f1239" stroke-width="1.4"/>
+            <path d="M0 0 L26 -14 Q32 0 24 14 Z" fill="#f43f5e" stroke="#9f1239" stroke-width="1.4"/>
+            <rect x="-6" y="-6" width="12" height="12" rx="4" fill="#fb7185" stroke="#9f1239" stroke-width="1.4"/>
+          </g>
+        `;
+      }
+    }
+
+    // --- VẼ PHỤ KIỆN CẦM TAY ---
+    function renderHandItem(itemId) {
+      const container = document.getElementById('layer-hand-item');
+      if (itemId === 'none') {
+        container.innerHTML = '';
+      } else if (itemId === 'magic_wand') {
+        container.innerHTML = `
+          <g transform="translate(248, 326) rotate(22)">
+            <line x1="0" y1="22" x2="0" y2="-45" stroke="#facc15" stroke-width="4.5" stroke-linecap="round"/>
+            <polygon points="0,-60 5,-48 18,-48 8,-40 11,-28 0,-35 -11,-28 -8,-40 -18,-48 -5,-48" fill="#f472b6" stroke="#facc15" stroke-width="1.5"/>
+            <circle cx="0" cy="-44" r="4" fill="#ffffff"/>
+          </g>
+        `;
+      } else if (itemId === 'royal_bag') {
+        container.innerHTML = `
+          <g transform="translate(246, 328)">
+            <path d="M-8 0 Q0 -14 8 0" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+            <rect x="-14" y="0" width="28" height="22" rx="6" fill="#fbcfe8" stroke="#db2777" stroke-width="1.5"/>
+            <circle cx="0" cy="9" r="3" fill="#facc15"/>
+          </g>
+        `;
+      } else if (itemId === 'flower_bouquet') {
+        container.innerHTML = `
+          <g transform="translate(246, 322) rotate(18)">
+            <polygon points="-10,-4 10,-4 0,24" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.2"/>
+            <circle cx="-6" cy="-8" r="6" fill="#f43f5e"/>
+            <circle cx="6" cy="-8" r="6" fill="#fb7185"/>
+            <circle cx="0" cy="-14" r="6.5" fill="#f472b6"/>
+          </g>
+        `;
+      }
+    }
+
+    /* =========================================================================
+       5. GIAO DIỆN TỦ ĐỒ ĐỘNG & TƯƠNG TÁC
+       ========================================================================= */
+    function switchTab(tabName) {
+      currentTab = tabName;
+      playSparkleSound('select');
+
+      // Cập nhật trạng thái nút tab
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.dataset.tab === tabName) {
+          btn.classList.add('bg-gradient-to-r', 'from-pink-500', 'to-rose-500', 'text-white', 'border-pink-500', 'shadow-md');
+          btn.classList.remove('bg-pink-50/80', 'text-pink-700', 'border-pink-100');
+        } else {
+          btn.classList.remove('bg-gradient-to-r', 'from-pink-500', 'to-rose-500', 'text-white', 'border-pink-500', 'shadow-md');
+          btn.classList.add('bg-pink-50/80', 'text-pink-700', 'border-pink-100');
+        }
+      });
+
+      renderWardrobePanel();
+    }
+
+    function selectOption(key, value) {
+      state[key] = value;
+      playSparkleSound('select');
+      triggerMagicSparkles();
+      renderPrincess();
+      renderWardrobePanel();
+    }
+
+    // Hiệu ứng hạt sao lấp lánh bung nở trên sân khấu
+    function triggerMagicSparkles() {
+      const layer = document.getElementById('sparkle-layer');
+      const emojis = ['✨', '💖', '⭐', '🌸', '💎'];
+      for (let i = 0; i < 12; i++) {
+        const span = document.createElement('span');
+        span.className = 'magic-sparkle text-lg sm:text-xl';
+        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        const startX = 35 + Math.random() * 30; // %
+        const startY = 30 + Math.random() * 45; // %
+        const dx = (Math.random() - 0.5) * 140 + 'px';
+        const dy = (Math.random() - 0.5) * 140 + 'px';
+
+        span.style.left = startX + '%';
+        span.style.top = startY + '%';
+        span.style.setProperty('--dx', dx);
+        span.style.setProperty('--dy', dy);
+
+        layer.appendChild(span);
+        setTimeout(() => span.remove(), 900);
+      }
+    }
+
+    function renderWardrobePanel() {
+      const panel = document.getElementById('wardrobe-panel');
+      let html = '';
+
+      if (currentTab === 'face') {
+        html += `
+          <div>
+            <h3 class="text-sm font-bold text-pink-700 mb-2.5 flex items-center gap-1.5">
+              <span>🎨</span> <span>Tông Màu Da Công Chúa</span>
+            </h3>
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+              ${GAME_DATA.skins.map(s => `
+                <button onclick="selectOption('skin', '${s.id}')"
+                  class="item-card p-2.5 rounded-2xl flex flex-col items-center gap-1.5 ${state.skin === s.id ? 'selected' : ''}">
+                  <span class="w-9 h-9 rounded-full border-2 border-white shadow-inner" style="background:${s.color}"></span>
+                  <span class="text-xs font-bold text-gray-700">${s.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-sm font-bold text-pink-700 mb-2.5 flex items-center gap-1.5">
+              <span>😊</span> <span>Biểu Cảm Khuôn Mặt</span>
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              ${GAME_DATA.expressions.map(e => `
+                <button onclick="selectOption('expression', '${e.id}')"
+                  class="item-card p-3 rounded-2xl flex items-center gap-2.5 text-left ${state.expression === e.id ? 'selected' : ''}">
+                  <span class="text-2xl">${e.icon}</span>
+                  <span class="text-xs sm:text-sm font-bold text-gray-700">${e.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (currentTab === 'hair') {
+        html += `
+          <div>
+            <h3 class="text-sm font-bold text-pink-700 mb-2.5 flex items-center gap-1.5">
+              <span>💇‍♀️</span> <span>Kiểu Tóc Hoàng Gia</span>
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              ${GAME_DATA.hairStyles.map(h => `
+                <button onclick="selectOption('hairStyle', '${h.id}')"
+                  class="item-card p-3 rounded-2xl flex items-center gap-2.5 text-left ${state.hairStyle === h.id ? 'selected' : ''}">
+                  <span class="text-2xl">${h.icon}</span>
+                  <span class="text-xs sm:text-sm font-bold text-gray-700">${h.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-sm font-bold text-pink-700 mb-2.5 flex items-center gap-1.5">
+              <span>🌈</span> <span>Bảng Màu Nhuộm Tóc</span>
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              ${GAME_DATA.hairColors.map(c => `
+                <button onclick="selectOption('hairColor', '${c.id}')"
+                  class="item-card p-2.5 rounded-2xl flex items-center gap-2 ${state.hairColor === c.id ? 'selected' : ''}">
+                  <span class="w-7 h-7 rounded-full shrink-0 border-2 border-white shadow" style="background: linear-gradient(135deg, ${c.light}, ${c.main}, ${c.dark})"></span>
+                  <span class="text-xs font-bold text-gray-700 truncate">${c.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (currentTab === 'makeup') {
+        html += `
+          <div>
+            <h3 class="text-sm font-bold text-pink-700 mb-2 flex items-center gap-1.5">
+              <span>👁️</span> <span>Màu Mắt & Kính Áp Tròng</span>
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              ${GAME_DATA.eyeColors.map(ec => `
+                <button onclick="selectOption('eyeColor', '${ec.id}')"
+                  class="item-card p-2.5 rounded-2xl flex items-center gap-2 ${state.eyeColor === ec.id ? 'selected' : ''}">
+                  <span class="w-7 h-7 rounded-full shrink-0 border-2 border-white shadow" style="background: linear-gradient(180deg, ${ec.top}, ${ec.bottom})"></span>
+                  <span class="text-xs font-bold text-gray-700">${ec.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <h3 class="text-sm font-bold text-pink-700 mb-2 flex items-center gap-1.5">
+                <span>🌸</span> <span>Phấn Má Hồng</span>
+              </h3>
+              <div class="grid grid-cols-2 gap-2">
+                ${GAME_DATA.blushStyles.map(b => `
+                  <button onclick="selectOption('blush', '${b.id}')"
+                    class="item-card p-2.5 rounded-2xl flex items-center gap-2 ${state.blush === b.id ? 'selected' : ''}">
+                    <span class="w-6 h-6 rounded-full shrink-0 border border-pink-200" style="background:${b.color === 'transparent' ? '#f3f4f6' : b.color}"></span>
+                    <span class="text-xs font-bold text-gray-700">${b.name}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-sm font-bold text-pink-700 mb-2 flex items-center gap-1.5">
+                <span>💋</span> <span>Màu Son Môi</span>
+              </h3>
+              <div class="grid grid-cols-2 gap-2">
+                ${GAME_DATA.lipColors.map(l => `
+                  <button onclick="selectOption('lipColor', '${l.id}')"
+                    class="item-card p-2.5 rounded-2xl flex items-center gap-2 ${state.lipColor === l.id ? 'selected' : ''}">
+                    <span class="w-6 h-6 rounded-full shrink-0 border border-white shadow-sm" style="background:${l.color}"></span>
+                    <span class="text-xs font-bold text-gray-700">${l.name}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-sm font-bold text-pink-700 mb-2 flex items-center gap-1.5">
+              <span>✨</span> <span>Họa Tiết Lấp Lánh Trên Mặt</span>
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              ${GAME_DATA.faceStickers.map(fs => `
+                <button onclick="selectOption('faceSticker', '${fs.id}')"
+                  class="item-card p-2.5 rounded-2xl flex items-center gap-2 ${state.faceSticker === fs.id ? 'selected' : ''}">
+                  <span class="text-xl">${fs.icon}</span>
+                  <span class="text-xs font-bold text-gray-700">${fs.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (currentTab === 'dress') {
+        html += `
+          <div>
+            <h3 class="text-sm font-bold text-pink-700 mb-2.5 flex items-center gap-1.5">
+              <span>👗</span> <span>Bộ Sưu Tập Váy Dạ Hội Hoàng Gia</span>
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              ${GAME_DATA.dresses.map(d => `
+                <button onclick="selectOption('dress', '${d.id}')"
+                  class="item-card p-3.5 rounded-2xl flex items-start gap-3 text-left ${state.dress === d.id ? 'selected' : ''}">
+                  <div class="w-12 h-12 rounded-2xl shrink-0 flex items-center justify-center text-2xl shadow-inner border border-white"
+                       style="background: linear-gradient(135deg, ${d.secondary}, ${d.primary})">
+                    👗
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="font-bold text-sm text-gray-800 flex items-center justify-between">
+                      <span class="truncate">${d.name}</span>
+                      ${state.dress === d.id ? '<span class="text-pink-500 text-xs">✔</span>' : ''}
+                    </div>
+                    <p class="text-xs text-gray-500 mt-0.5 line-clamp-2">${d.desc}</p>
+                  </div>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (currentTab === 'accessory') {
+        html += `
+          <div>
+            <h3 class="text-sm font-bold text-pink-700 mb-2 flex items-center gap-1.5">
+              <span>👑</span> <span>Vương Miện & Phụ Kiện Tóc</span>
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              ${GAME_DATA.headwears.map(hw => `
+                <button onclick="selectOption('headwear', '${hw.id}')"
+                  class="item-card p-2.5 rounded-2xl flex items-center gap-2 ${state.headwear === hw.id ? 'selected' : ''}">
+                  <span class="text-xl">${hw.icon}</span>
+                  <span class="text-xs font-bold text-gray-700">${hw.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-sm font-bold text-pink-700 mb-2 flex items-center gap-1.5">
+              <span>📿</span> <span>Vòng Cổ & Trang Sức</span>
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              ${GAME_DATA.necklaces.map(nk => `
+                <button onclick="selectOption('necklace', '${nk.id}')"
+                  class="item-card p-2.5 rounded-2xl flex items-center gap-2 ${state.necklace === nk.id ? 'selected' : ''}">
+                  <span class="text-xl">${nk.icon}</span>
+                  <span class="text-xs font-bold text-gray-700">${nk.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <h3 class="text-sm font-bold text-pink-700 mb-2 flex items-center gap-1.5">
+                <span>🪄</span> <span>Phụ Kiện Cầm Tay</span>
+              </h3>
+              <div class="grid grid-cols-2 gap-2">
+                ${GAME_DATA.handItems.map(hi => `
+                  <button onclick="selectOption('handItem', '${hi.id}')"
+                    class="item-card p-2.5 rounded-2xl flex items-center gap-2 ${state.handItem === hi.id ? 'selected' : ''}">
+                    <span class="text-xl">${hi.icon}</span>
+                    <span class="text-xs font-bold text-gray-700">${hi.name}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-sm font-bold text-pink-700 mb-2 flex items-center gap-1.5">
+                <span>🦋</span> <span>Cánh Tiên Phép Thuật</span>
+              </h3>
+              <div class="grid grid-cols-2 gap-2">
+                ${GAME_DATA.wings.map(wg => `
+                  <button onclick="selectOption('wings', '${wg.id}')"
+                    class="item-card p-2.5 rounded-2xl flex items-center gap-2 ${state.wings === wg.id ? 'selected' : ''}">
+                    <span class="text-xl">${wg.icon}</span>
+                    <span class="text-xs font-bold text-gray-700">${wg.name}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (currentTab === 'background') {
+        html += `
+          <div>
+            <h3 class="text-sm font-bold text-pink-700 mb-2.5 flex items-center gap-1.5">
+              <span>🏰</span> <span>Chọn Bối Cảnh Vương Quốc</span>
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              ${GAME_DATA.backgrounds.map(bg => `
+                <button onclick="selectOption('background', '${bg.id}')"
+                  class="item-card p-4 rounded-2xl flex items-center gap-3 text-left ${state.background === bg.id ? 'selected' : ''}">
+                  <span class="text-3xl">${bg.icon}</span>
+                  <div>
+                    <div class="font-bold text-sm text-gray-800">${bg.name}</div>
+                    <div class="text-xs text-pink-500 font-semibold mt-0.5">Nhấn để đổi khung cảnh</div>
+                  </div>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      panel.innerHTML = html;
+    }
+
+    /* =========================================================================
+       6. CÁC TÍNH NĂNG ĐẶC BIỆT: PHỐI NGẪU NHIÊN, ĐẶT LẠI, CHỤP ẢNH & LƯU PNG
+       ========================================================================= */
+    function pickRandom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)].id;
+    }
+
+    function randomizeOutfit() {
+      state = {
+        skin: pickRandom(GAME_DATA.skins),
+        expression: pickRandom(GAME_DATA.expressions),
+        hairStyle: pickRandom(GAME_DATA.hairStyles),
+        hairColor: pickRandom(GAME_DATA.hairColors),
+        eyeColor: pickRandom(GAME_DATA.eyeColors),
+        blush: pickRandom(GAME_DATA.blushStyles),
+        lipColor: pickRandom(GAME_DATA.lipColors),
+        faceSticker: pickRandom(GAME_DATA.faceStickers),
+        dress: pickRandom(GAME_DATA.dresses),
+        headwear: pickRandom(GAME_DATA.headwears),
+        necklace: pickRandom(GAME_DATA.necklaces),
+        handItem: pickRandom(GAME_DATA.handItems),
+        wings: pickRandom(GAME_DATA.wings),
+        background: pickRandom(GAME_DATA.backgrounds)
+      };
+      playSparkleSound('magic');
+      triggerMagicSparkles();
+      renderPrincess();
+      renderWardrobePanel();
+      showToast('🪄', 'Úm ba la! Một diện mạo mới tuyệt đẹp!');
+    }
+
+    function resetOutfit() {
+      state = { ...DEFAULT_STATE };
+      playSparkleSound('select');
+      triggerMagicSparkles();
+      renderPrincess();
+      renderWardrobePanel();
+      showToast('🔄', 'Đã đưa công chúa về trang phục ban đầu');
+    }
+
+    function updateLiveScore() {
+      const titles = ['Lộng Lẫy', 'Kiêu Sa', 'Ngọt Ngào', 'Rạng Rỡ', 'Tuyệt Mỹ'];
+      let hash = 0;
+      Object.values(state).forEach(val => {
+        for (let i = 0; i < val.length; i++) hash += val.charCodeAt(i);
+      });
+      document.getElementById('live-style-score').textContent = titles[hash % titles.length];
+    }
+
+    // Chuyển đổi SVG sang PNG Data URL chất lượng cao (800x1000)
+    function generatePrincessPNG(callback) {
+      const svgEl = document.getElementById('princess-svg');
+      const serializer = new XMLSerializer();
+      let svgString = serializer.serializeToString(svgEl);
+
+      // Đảm bảo có namespace chuẩn
+      if (!svgString.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+        svgString = svgString.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+      }
+
+      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+      const img = new Image();
+
+      img.onload = function () {
+        const canvas = document.createElement('canvas');
+        canvas.width = 800;
+        canvas.height = 1000;
+        const ctx = canvas.getContext('2d');
+
+        // Vẽ ảnh công chúa lên canvas
+        ctx.drawImage(img, 0, 0, 800, 1000);
+
+        // Vẽ khung viền hoàng gia & chữ ký tên game tinh tế ở góc dưới
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.lineWidth = 16;
+        ctx.strokeRect(8, 8, 784, 984);
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.82)';
+        ctx.beginPath();
+        ctx.roundRect(210, 935, 380, 42, 21);
+        ctx.fill();
+
+        ctx.fillStyle = '#db2777';
+        ctx.font = 'bold 20px Quicksand, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('✨ Phòng Thay Đồ Hoàng Gia ✨', 400, 963);
+
+        URL.revokeObjectURL(url);
+        callback(canvas.toDataURL('image/png'));
+      };
+      img.src = url;
+    }
+
+    let latestSnapshotDataUrl = '';
+
+    function openSnapshotModal() {
+      playSparkleSound('camera');
+      const dressObj = GAME_DATA.dresses.find(d => d.id === state.dress) || GAME_DATA.dresses[0];
+      const bgObj = GAME_DATA.backgrounds.find(b => b.id === state.background) || GAME_DATA.backgrounds[0];
+
+      document.getElementById('card-princess-title').textContent = dressObj.title;
+      document.getElementById('card-comment').textContent = 
+        `Tỏa sáng rực rỡ tại ${bgObj.name}! Phong cách ${dressObj.name.toLowerCase()} kết hợp cùng kiểu tóc và trang điểm tinh tế khiến cả vương quốc phải trầm trồ.`;
+
+      generatePrincessPNG((dataUrl) => {
+        latestSnapshotDataUrl = dataUrl;
+        document.getElementById('snapshot-preview-img').src = dataUrl;
+        const modal = document.getElementById('snapshot-modal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      });
+    }
+
+    function closeSnapshotModal() {
+      const modal = document.getElementById('snapshot-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function downloadPNG() {
+      if (!latestSnapshotDataUrl) return;
+      const link = document.createElement('a');
+      link.download = `cong-chua-hoang-gia-${Date.now()}.png`;
+      link.href = latestSnapshotDataUrl;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      playSparkleSound('magic');
+      showToast('⬇️', 'Đang tải ảnh công chúa PNG về máy!');
+    }
+
+    function saveToCollection() {
+      if (!latestSnapshotDataUrl) return;
+      const dressObj = GAME_DATA.dresses.find(d => d.id === state.dress) || GAME_DATA.dresses[0];
+
+      // Tạo ảnh thu nhỏ (thumbnail) để lưu nhẹ nhàng vào localStorage
+      const img = new Image();
+      img.onload = () => {
+        const thumbCanvas = document.createElement('canvas');
+        thumbCanvas.width = 240;
+        thumbCanvas.height = 300;
+        thumbCanvas.getContext('2d').drawImage(img, 0, 0, 240, 300);
+        const thumbUrl = thumbCanvas.toDataURL('image/jpeg', 0.82);
+
+        savedCollection.unshift({
+          id: Date.now(),
+          title: dressObj.title,
+          image: thumbUrl,
+          state: { ...state }
+        });
+
+        // Giới hạn tối đa 12 bộ trang phục trong bộ sưu tập mini
+        if (savedCollection.length > 12) savedCollection.pop();
+
+        try {
+          localStorage.setItem('royal_princess_gallery', JSON.stringify(savedCollection));
+        } catch (e) {}
+
+        updateGalleryBadge();
+        playSparkleSound('magic');
+        closeSnapshotModal();
+        showToast('💖', 'Đã lưu vào Bộ Sưu Tập Hoàng Gia!');
+      };
+      img.src = latestSnapshotDataUrl;
+    }
+
+    function updateGalleryBadge() {
+      document.getElementById('gallery-badge').textContent = savedCollection.length;
+    }
+
+    function openGalleryModal() {
+      playSparkleSound('select');
+      renderGalleryGrid();
+      const modal = document.getElementById('gallery-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeGalleryModal() {
+      const modal = document.getElementById('gallery-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function loadFromGallery(id) {
+      const item = savedCollection.find(x => x.id === id);
+      if (!item) return;
+      state = { ...item.state };
+      renderPrincess();
+      renderWardrobePanel();
+      closeGalleryModal();
+      playSparkleSound('magic');
+      triggerMagicSparkles();
+      showToast('👗', `Đã mặc lại bộ: ${item.title}`);
+    }
+
+    function deleteFromGallery(id, event) {
+      event.stopPropagation();
+      savedCollection = savedCollection.filter(x => x.id !== id);
+      try {
+        localStorage.setItem('royal_princess_gallery', JSON.stringify(savedCollection));
+      } catch (e) {}
+      updateGalleryBadge();
+      renderGalleryGrid();
+      showToast('🗑️', 'Đã xóa khỏi bộ sưu tập');
+    }
+
+    function renderGalleryGrid() {
+      const grid = document.getElementById('gallery-grid');
+      if (savedCollection.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-12 text-center text-gray-500">
+            <div class="text-4xl mb-2">👑</div>
+            <p class="font-bold text-sm">Chưa có bức ảnh công chúa nào được lưu!</p>
+            <p class="text-xs mt-1">Hãy phối đồ thật xinh và nhấn nút "Chụp Ảnh" nhé.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = savedCollection.map(item => `
+        <div onclick="loadFromGallery(${item.id})" 
+             class="group relative rounded-2xl overflow-hidden border-2 border-pink-200 bg-pink-50 cursor-pointer shadow-sm hover:shadow-md transition-all">
+          <img src="${item.image}" alt="${item.title}" class="w-full aspect-[4/5] object-cover"/>
+          <div class="p-2 bg-white/95">
+            <p class="text-xs font-bold text-pink-700 truncate">${item.title}</p>
+            <p class="text-[10px] text-purple-500 font-semibold">Nhấn để mặc lại</p>
+          </div>
+          <button onclick="deleteFromGallery(${item.id}, event)" title="Xóa"
+            class="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/90 text-rose-500 hover:bg-rose-500 hover:text-white text-xs font-bold shadow flex items-center justify-center">
+            ✕
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // Hộp thông báo Toast
+    let toastTimer = null;
+    function showToast(icon, message) {
+      const box = document.getElementById('toast-box');
+      document.getElementById('toast-icon').textContent = icon;
+      document.getElementById('toast-text').textContent = message;
+
+      box.classList.remove('opacity-0', 'translate-y-4');
+      box.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        box.classList.add('opacity-0', 'translate-y-4');
+        box.classList.remove('opacity-100', 'translate-y-0');
+      }, 2400);
+    }
+
+    /* =========================================================================
+       7. KHỞI TẠO TRÒ CHƠI KHI TẢI XONG TRANG
+       ========================================================================= */
+    window.onload = function () {
+      renderPrincess();
+      switchTab('face');
+      updateGalleryBadge();
+    };
+  </script>
+</body>
+</html>
